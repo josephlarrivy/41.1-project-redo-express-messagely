@@ -1,3 +1,15 @@
+const express = require("express")
+const User = require("../models/user")
+const Message = require("../models/message")
+const router = new express.Router();
+
+// #####################
+
+router.get("/", async (req, res, next) => {
+    return res.send('test usersRoutes')
+})
+
+
 /** GET / - get list of users.
  *
  * => {users: [{username, first_name, last_name, phone}, ...]}
@@ -32,3 +44,6 @@
  *                 to_user: {username, first_name, last_name, phone}}, ...]}
  *
  **/
+
+
+module.exports = router;
