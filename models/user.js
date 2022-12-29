@@ -90,15 +90,8 @@ class User {
     }
   }
 
-  /** Return messages from this user.
-   *
-   * [{id, to_user, body, sent_at, read_at}]
-   *
-   * where to_user is
-   *   {username, first_name, last_name, phone}
-   */
 
-  static async messagesFrom(username) { }
+
 
   /** Return messages to this user.
    *
@@ -107,12 +100,32 @@ class User {
    * where from_user is
    *   {username, first_name, last_name, phone}
    */
+  static async messagesTo(username) {
+    try {
+      let result = await db.query('SELECT * FROM messages WHERE to_username = $1', [username]);
+      return result;
+    } catch (e) {
+      return e
+    }
+  }
 
-  static async messagesTo(username) { }
 
+  /** Return messages from this user.
+   *
+   * [{id, to_user, body, sent_at, read_at}]
+   *
+   * where to_user is
+   *   {username, first_name, last_name, phone}
+   */
 
-
-
+  static async messagesFrom(username) {
+    try {
+      let result = await db.query('SELECT * FROM messages WHERE from_username = $1', [username]);
+      return result;
+    } catch (e) {
+      return e
+    }
+  }
 
 
 }

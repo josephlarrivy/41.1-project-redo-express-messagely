@@ -31,8 +31,11 @@ router.get("/", async (req, res, next) => {
  *
  **/
 
-router.post('/', (req, res, next) => {
-    let { to_username, body } = req.body;
+router.post('/', async (req, res, next) => {
+    let { to_username, from_username, body } = req.body;
+    console.log({to_username, from_username, body})
+    let response = await Message.create({to_username, from_username, body})
+    return res.json(response)
 })
 
 

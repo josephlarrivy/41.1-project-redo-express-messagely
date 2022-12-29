@@ -36,6 +36,12 @@ router.get("/:username", async (req, res, next) => {
  *                 from_user: {username, first_name, last_name, phone}}, ...]}
  *
  **/
+router.get("/:username/to", async (req, res, next) => {
+    let {username} = req.params;
+    let result = await User.messagesTo(username);
+    console.log(result.rows)
+    return res.json(result.rows)
+})
 
 
 /** GET /:username/from - get messages from user
@@ -47,6 +53,13 @@ router.get("/:username", async (req, res, next) => {
  *                 to_user: {username, first_name, last_name, phone}}, ...]}
  *
  **/
+
+router.get("/:username/from", async (req, res, next) => {
+    let { username } = req.params;
+    let result = await User.messagesFrom(username);
+    console.log(result.rows)
+    return res.json(result.rows)
+})
 
 
 module.exports = router;
