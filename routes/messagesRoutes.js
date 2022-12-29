@@ -1,6 +1,7 @@
 const express = require("express")
 const User = require("../models/user")
-const Message = require("../models/message")
+const Message = require("../models/message");
+const { DB_URI } = require("../config");
 const router = new express.Router();
 
 // #####################
@@ -29,6 +30,12 @@ router.get("/", async (req, res, next) => {
  *   {message: {id, from_username, to_username, body, sent_at}}
  *
  **/
+
+router.post('/', (req, res, next) => {
+    let { to_username, body } = req.body;
+})
+
+
 
 
 /** POST/:id/read - mark message as read:

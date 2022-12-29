@@ -5,16 +5,15 @@ const router = new express.Router();
 
 // #####################
 
-router.get("/", async (req, res, next) => {
-    return res.send('test usersRoutes')
-})
-
-
 /** GET / - get list of users.
  *
  * => {users: [{username, first_name, last_name, phone}, ...]}
  *
  **/
+router.get("/", async (req, res, next) => {
+    let result = await User.all()
+    return res.json(result)
+})
 
 
 /** GET /:username - get detail of users.
@@ -22,7 +21,11 @@ router.get("/", async (req, res, next) => {
  * => {user: {username, first_name, last_name, phone, join_at, last_login_at}}
  *
  **/
-
+router.get("/:username", async (req, res, next) => {
+    let {username} = req.params;
+    let result = await User.get(username)
+    return res.json(result)
+})
 
 /** GET /:username/to - get messages to user
  *
