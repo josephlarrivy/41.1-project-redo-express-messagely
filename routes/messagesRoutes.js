@@ -22,7 +22,15 @@ router.get("/", async (req, res, next) => {
  * Make sure that the currently-logged-in users is either the to or from user.
  *
  **/
-
+router.get("/:id", async (req, res, next) => {
+    try {
+        let {id} = req.params;
+        let response = await Message.get(id)
+        return res.json(response)
+    } catch (e) {
+        return e
+    }
+})
 
 /** POST / - post message.
  *
@@ -30,15 +38,17 @@ router.get("/", async (req, res, next) => {
  *   {message: {id, from_username, to_username, body, sent_at}}
  *
  **/
-
 router.post('/', async (req, res, next) => {
-    let { to_username, from_username, body } = req.body;
-    console.log({to_username, from_username, body})
-    let response = await Message.create({to_username, from_username, body})
-    return res.json(response)
+    try {
+        let { to_username, from_username, body } = req.body;
+        console.log({to_username, from_username, body})
+        let response = await Message.create({to_username, from_username, body})
+
+        return res.json(response)
+    } catch (e) {
+        return next(e)
+    }
 })
-
-
 
 
 /** POST/:id/read - mark message as read:
@@ -48,5 +58,16 @@ router.post('/', async (req, res, next) => {
  * Make sure that the only the intended recipient can mark as read.
  *
  **/
+router.post("/:id/read", async (req, res, next) => {
+    try {
+        let {id} = req.params;
+        let response = await Message.markRead(id);
+        return res.send(response)
+    } catch (e) {
+        return next(e)
+    }
+})
+
+
 
 module.exports = router;
